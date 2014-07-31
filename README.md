@@ -2,7 +2,7 @@
 
 A teamcity reporter for grunt-mocha-webdriver tasks.
 
-It can be used for saucelabs and selenium tests. If you need teamcity reporter for grunt-mocha-webdriver phantom tests, just use `[mocha-teamcity-reporter](`)https://www.npmjs.org/package/mocha-teamcity-reporter)`.
+It can be used for saucelabs and selenium tests. If you need teamcity reporter for grunt-mocha-webdriver phantom tests, just use [`mocha-teamcity-reporter`](https://www.npmjs.org/package/mocha-teamcity-reporter).
 
 This package is largely inspired (and it is an euphemism) by the `mocha-teamcity-reporter`.
 
@@ -17,7 +17,8 @@ Add `customReporter: 'teamcity_reporter'` to your `mochaWebdriver` `options` tas
         src: ['tests.js'],
         options: {
           // the only difference
-          customReporter: 'teamcity_reporter',
+          reporter: 'gmwd-teamcity-reporter',
+          customReporter: true,
           testName: 'custom reporter test',
           concurrency: 2,
           usePromises: true,
