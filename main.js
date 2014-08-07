@@ -4,16 +4,35 @@ var Base = require('mocha').reporters.Base;
 
 // any customReporter should return a function that takes browser as param
 // browser contains browserTitle property which can help to differenciate multiple browser instance
-module.exports = function (browser) {
+module.exports = function (browser, opts) {
 
   // accumulates the log
   // displayed when the tests are done
   // the idea is that multiple browsers can run tests at the same time using `concurrency`...
-  var logs = [];
+  var Logs = function(immediate) {
+    this._data = [];
+    this.immediate = immediate;
+  };
+
+  Logs.prototype.push = function(msg) {
+    if (this.immediate) {
+      console.log(msg);
+      return;
+    }
+    this._data.push(msg);
+  };
+
+  Logs.prototype.finalize = function() {
+    if (this.immediate) {
+      return;
+    }
+    console.log(this._data.join('\n'));
+  };
 
   var Teamcity = function(runner) {
     Base.call(this, runner);
     var stats = this.stats;
+    var logs = new Logs(opts.concurrency === 1);
 
     runner.on('suite', function(suite) {
       if (suite.root) {
@@ -29,6 +48,7 @@ module.exports = function (browser) {
 
     runner.on('fail', function(test, err) {
       logs.push("##teamcity[testFailed name='" + escape(test.title) + "' message='" + escape(err.message) + "' captureStandardOutput='true']");
+      logs.push(err.stack);
     });
 
     runner.on('pending', function(test) {
@@ -55,7 +75,7 @@ module.exports = function (browser) {
   };
 
   return Teamcity;
-}
+};
 
 
 function escape(str) {
