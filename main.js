@@ -70,9 +70,10 @@ module.exports = function (browser, opts) {
     runner.on('end', function() {
       logs.push("##teamcity[testSuiteFinished name='mocha.suite' duration='" + stats.duration + "']");
       // we're done, show the logs
-      console.log(logs.join('\n'));
+      logs.finalize();
     });
   };
+  SauceReporter.prototype.__proto__ = BaseReporter.prototype;
 
   return Teamcity;
 };

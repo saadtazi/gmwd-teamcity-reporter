@@ -1,6 +1,6 @@
 {
   "name": "gmwd-teamcity-reporter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A teamcity reporter for grunt-mocha-webdriver tasks",
   "main": "main.js",
   "author": "Saad Tazi <saad@saadtazi.com>",
