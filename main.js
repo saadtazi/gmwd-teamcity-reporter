@@ -73,7 +73,7 @@ module.exports = function (browser, opts) {
       logs.finalize();
     });
   };
-  SauceReporter.prototype.__proto__ = Base.prototype;
+  Teamcity.prototype.__proto__ = Base.prototype;
 
   return Teamcity;
 };
